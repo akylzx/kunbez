@@ -1,0 +1,48 @@
+{
+    "rewrites": [
+      {
+        "source": "/ctgov2/(.*)",
+        "destination": "https://clinicaltrials.gov/$1"
+      },
+      {
+        "source": "/ctgov1/(.*)",
+        "destination": "https://clinicaltrials.gov/$1"
+      }
+    ],
+    "headers": [
+      {
+        "source": "/ctgov2/(.*)",
+        "headers": [
+          {
+            "key": "Access-Control-Allow-Origin",
+            "value": "*"
+          },
+          {
+            "key": "Access-Control-Allow-Methods",
+            "value": "GET, POST, PUT, DELETE, OPTIONS"
+          },
+          {
+            "key": "Access-Control-Allow-Headers",
+            "value": "Content-Type, Authorization"
+          }
+        ]
+      },
+      {
+        "source": "/ctgov1/(.*)",
+        "headers": [
+          {
+            "key": "Access-Control-Allow-Origin",
+            "value": "*"
+          },
+          {
+            "key": "Access-Control-Allow-Methods",
+            "value": "GET, POST, PUT, DELETE, OPTIONS"
+          },
+          {
+            "key": "Access-Control-Allow-Headers",
+            "value": "Content-Type, Authorization"
+          }
+        ]
+      }
+    ]
+  }
