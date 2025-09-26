@@ -24,4 +24,216 @@
     --sidebar-ring: 217.2 91.2% 59.8%
   }
 }
+@layer utilities {
+  .mobile-container {
+    @apply px-4 sm:px-6 md:px-8;
+  }
+  
+  .mobile-card {
+    @apply rounded-lg sm:rounded-xl md:rounded-2xl;
+  }
+  
+  .mobile-text {
+    @apply text-sm sm:text-base;
+  }
+
+  .mobile-grid {
+    @apply grid-cols-1 sm:grid-cols-2 md:grid-cols-3;
+  }
+
+  /* Responsive layout transformations */
+  .responsive-layout {
+    @apply w-full max-w-6xl mx-auto px-4;
+    
+    @screen sm {
+      @apply px-6;
+    }
+    
+    @screen lg {
+      @apply px-8;
+    }
+  }
+
+  /* Stack on mobile, side-by-side on desktop */
+  .responsive-stack {
+    @apply flex flex-col gap-4;
+    
+    @screen md {
+      @apply flex-row items-center;
+    }
+  }
+
+  /* Grid transformations */
+  .responsive-grid {
+    @apply grid gap-4;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    
+    @screen md {
+      @apply gap-6;
+    }
+  }
+
+  /* Card transformations */
+  .responsive-card {
+    @apply rounded-lg border border-gray-200 bg-white/80 backdrop-blur-sm 
+           shadow-sm hover:shadow-md transition-all duration-200;
+    
+    @screen sm {
+      @apply rounded-xl;
+    }
+
+    /* Simplified mobile view */
+    @media (max-width: 640px) {
+      @apply px-4 py-3;
+      
+      /* Hide decorative elements on mobile */
+      & .decorative {
+        @apply hidden;
+      }
+      
+      /* Simplify headers on mobile */
+      & .card-header {
+        @apply flex-col gap-2;
+      }
+      
+      /* Stack buttons vertically */
+      & .card-actions {
+        @apply flex-col gap-2 w-full;
+      }
+    }
+  }
+
+  /* Navigation transformations */
+  .responsive-nav {
+    /* Desktop: Horizontal nav */
+    @apply hidden md:flex items-center gap-6;
+
+    /* Mobile: Bottom navigation bar */
+    @media (max-width: 768px) {
+      @apply fixed bottom-0 left-0 right-0 flex items-center justify-around
+             bg-white border-t border-gray-200 py-2 px-4 z-50;
+      padding-bottom: calc(env(safe-area-inset-bottom) + 0.5rem);
+    }
+  }
+
+  /* Form adaptations */
+  .responsive-form {
+    @apply space-y-4;
+
+    /* Desktop: Multi-column layout */
+    @screen md {
+      @apply grid grid-cols-2 gap-6;
+      & > * {
+        @apply col-span-2; /* Default full width */
+      }
+      & > .half {
+        @apply col-span-1; /* Half width items */
+      }
+    }
+
+    /* Mobile: Full-width inputs with larger touch targets */
+    @media (max-width: 640px) {
+      & input, & select, & button {
+        @apply h-12 text-base;
+      }
+    }
+  }
+
+  /* Content adaptations */
+  .responsive-content {
+    /* Mobile: Scrollable content with hints */
+    @media (max-width: 640px) {
+      @apply relative;
+      max-height: calc(100vh - 180px);
+      overflow-y: auto;
+      
+      /* Scroll indicators */
+      &::after {
+        content: '';
+        @apply absolute bottom-0 left-0 right-0 h-12 
+               bg-gradient-to-t from-white to-transparent 
+               pointer-events-none;
+      }
+    }
+  }
+
+  /* Modal/Dialog transformations */
+  .responsive-dialog {
+    @apply fixed inset-0 z-50 flex items-center justify-center p-4;
+    
+    /* Mobile: Bottom sheet */
+    @media (max-width: 640px) {
+      @apply items-end;
+      & > div {
+        @apply w-full rounded-t-xl rounded-b-none;
+        @apply animate-slide-up;
+      }
+    }
+  }
+}
+
+/* Mobile optimizations */
+@media (max-width: 640px) {
+  .mobile-safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  
+  .mobile-nav {
+    @apply fixed bottom-0 left-0 right-0 bg-white border-t;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+/* Touch optimizations */
+@media (hover: none) {
+  .touch-target {
+    @apply min-h-[44px] min-w-[44px];
+  }
+}
+
+/* Mobile touch optimizations */
+@media (hover: none) {
+  .touch-friendly {
+    @apply select-none;
+    -webkit-tap-highlight-color: transparent;
+    
+    /* Larger touch targets */
+    & button, & a, & input, & select {
+      @apply min-h-[44px] min-w-[44px];
+      @apply touch-none;
+    }
+    
+    /* Improved touch feedback */
+    & button:active, & a:active {
+      @apply opacity-60 transform scale-95;
+    }
+  }
+}
+
+/* Custom animations */
+@keyframes slide-up {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.3s ease-out;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.2s ease-out;
+}
 
